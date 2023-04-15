@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayNameGeneration(DisplayNameGenerator.Simple.class)
 public class DemoUtilsTest {
 
-    // Creating a DemoUtil field
-    DemoUtils demoUtils;
+    DemoUtils demoUtils= new DemoUtils();
 
     @Test
     @DisplayName("This tests shows equality")
@@ -31,18 +30,23 @@ public class DemoUtilsTest {
         assertNotNull(demoUtils.checkNull(str2));
     }
 
-    @Test
-    void testSameAndNotSame() {
-        String str = "123";
-        assertSame(str, "123"); // PASSES!
-        assertNotSame(str, new DemoUtilsTest()); // PASSES!
-    }
 
     @Test
     void testTrueAndFalse(){
         assertTrue(1==1, "one must equal one!"); // PASSES!
         assertFalse(1>1, "one cannot be greater than one!"); // PASSES
     }
+
+    @Test
+    void testSameAndNotSame(){
+        String str = "luv2code";
+        assertSame(demoUtils.getAcademy(), demoUtils.getAcademyDuplicate());
+        assertNotSame(demoUtils.getAcademy(), str);
+    }
+
+    @Test
+
+    /*
 
     @BeforeAll
     static void setUpBeforeAllMethods(){ // MUST BE STATIC
@@ -64,4 +68,6 @@ public class DemoUtilsTest {
     void tearDownAfterEach(){
         System.out.println("Running @AfterEach");
     }
+
+     */
 }

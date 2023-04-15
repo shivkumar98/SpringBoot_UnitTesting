@@ -422,6 +422,40 @@ public class DemoUtilsTest {
 
 ![](2023-04-15-15-05-11.png)
 
+<br>
+
+## 🟦 2.6 JUnit Assertions - Same/NotSame and True/False
+
+### 🟥 Assert Same and Not Same
+
+* `assertSame()` - asserts that items refer to same object
+
+* `assertNotSame()` - asserts that items do NOT refer to same object
+
+
+```java
+    @Test
+    void testSameAndNotSame() {
+        String str = "123";
+        assertSame(str, "123"); // PASSES!
+        assertNotSame(str, new DemoUtilsTest()); // PASSES!
+    }
+```
+
+### 🟥 Asserts True and False
+
+* `assertTrue` - asserts condition is true
+
+* `assertFalse` - asserts condition is false
+
+```java
+    @Test
+    void testTrueAndFalse(){
+        assertTrue(1==1, "one must equal one!"); // PASSES!
+        assertFalse(1>1, "one cannot be greater than one!"); // PASSES
+    }
+```
+
 
 ## 🟦 H2
 
