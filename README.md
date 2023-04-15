@@ -204,6 +204,47 @@ import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
     </dependencies>
 ```
 
+<br>
+
+## 🟦 2.3 JUnit Assertions
+
+* I add a new package into the `test` package and the `DemoUtilTest` class:
+
+![](2023-04-15-12-39-51.png)
+
+* I write the test:
+
+```java
+    @Test
+    void testEqualsAndNotEquals(){
+        // setup:
+        DemoUtils demoUtils = new DemoUtils();
+        // using assertEquals and NotEquals:
+        assertEquals(6, demoUtils.add(2,4), "2+4 should equal 6");
+        assertNotEquals(6, demoUtils.add(1,9), "1+9 should not be 6");
+    }
+```
+
+* I run the test and it passes as expected:
+
+![](2023-04-15-12-54-48.png)
+
+* I create a method for checking Nulls:
+
+```java
+    @Test
+    void testNullAndNotNull() {
+        DemoUtils demoUtils = new DemoUtils();
+
+        String str1 = null; String str2 = "luv2code";
+
+        assertNull(demoUtils.checkNull(str1));
+        assertNotNull(demoUtils.checkNull(str2));
+    }
+```
+
+* The test passes as expected!!!
+
 ## 🟦 H2
 
 ### 🟥 H3
