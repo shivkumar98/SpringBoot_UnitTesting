@@ -164,9 +164,45 @@ import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
 ```
 
 
-###  🖥️Code Demo 🖥️
+###  🖥️Project Setup 🖥️
 
 * I download the code repository from [https://github.com/darbyluv2code/spring-boot-unit-testing](https://github.com/darbyluv2code/spring-boot-unit-testing)
+
+* I copy `1.00-starting-project` into [this](/Demos/demo-1/) folder
+
+* I open up the [POM](/Demos/demo-1/1.00-starting-project/pom.xml) in intelliJ and see this:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.luv2code</groupId>
+    <artifactId>junitdemo</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+</project>
+```
+
+* I add the JUnit dependency using intelliJ's generate button:
+
+```xml
+   <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+```
 
 ## 🟦 H2
 
