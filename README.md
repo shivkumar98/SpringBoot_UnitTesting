@@ -163,8 +163,9 @@
 import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
 ```
 
+<hr>
 
-###  🖥️Project Setup 🖥️
+###  🖥️⌨️🖱️ Project Setup 🖱️⌨️🖥️
 
 * I download the code repository from [https://github.com/darbyluv2code/spring-boot-unit-testing](https://github.com/darbyluv2code/spring-boot-unit-testing)
 
@@ -244,6 +245,84 @@ import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
 ```
 
 * The test passes as expected!!!
+
+
+<br>
+
+## 🟦 2.4 Test Lifecycle Methods
+
+### 🟥 Lifecycle Methods
+
+* Some common operations is setting up the environment and cleaning things after tests finish.
+
+* JUnit provides Lifecycle Method Annotations, including:
+
+1) `@BeforeEach` - Method is executed before EACH test method
+
+2) `@AfterEach` - Method to be executrer after EACH test method
+
+3) `@BeforeAll` - Only executed ONCE before all test methods. MUST be static
+
+4) `@AfterAll` - Only executed ONCE after all test methods. MUST be static
+
+### 🟥 Execution Sequence
+
+![](2023-04-15-13-08-24.png)
+
+<hr>
+
+###  🖥️⌨️🖱️ Code Demo 🖱️⌨️🖥️
+
+* I remove the instantiation of the `DemoUtils` class in each test method and setup a class field.
+
+* I use the `@BeforeEach` annotation to write a method which instantiates `DemoUtils`, and write a method with `@AfterEach` which just prints a diagnostic message:
+
+```java
+public class DemoUtilsTest {
+
+    // Creating a DemoUtil field
+    DemoUtils demoUtils;
+
+    @BeforeEach
+    void setUpBefore(){
+        demoUtils = new DemoUtils();
+        System.out.println("BeforeEach executes before each test method");
+    }
+
+    @Test
+    void testEqualsAndNotEquals(){
+        System.out.println("Running test: testEqualsAndNotEquals");
+        // using assertEquals and NotEquals:
+        assertEquals(6, demoUtils.add(2,4), "2+4 should equal 6");
+        assertNotEquals(6, demoUtils.add(1,9), "1+9 should not be 6");
+    }
+
+    @Test
+    void testNullAndNotNull() {
+        System.out.println("Running test: testNullAndNotNull");
+        String str1 = null; String str2 = "luv2code";
+        assertNull(demoUtils.checkNull(str1));
+        assertNotNull(demoUtils.checkNull(str2));
+    }
+
+    @AfterEach
+    void tearDownAfterEach(){
+        System.out.println("Running @AfterEach");
+    }
+}
+```
+
+* Running the test class, shows the following in console:
+
+```console
+BeforeEach executes before each test method
+Running test: testNullAndNotNull
+Running @AfterEach
+BeforeEach executes before each test method
+Running test: testEqualsAndNotEquals
+Running @AfterEach
+```
+
 
 ## 🟦 H2
 
