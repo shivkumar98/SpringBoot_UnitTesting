@@ -93,6 +93,80 @@
     * Used for creating mocks and stubs
     * Minimise dependencies (such as databases)
 
+<br>
+
+## 🟦 2.2 Developing JUnit Tests - Overview + Demo
+
+### 🟥 Introduction
+
+* We shall look at some simple examples for unit testing 🎯
+
+* We will look at fundamentals like defining and running tests, and using assertions 🎯
+
+* Discuss Test-Driven Development 🎯
+
+### 🟥 Development Process:
+
+* We shall create a `DemoUtil` class with a method: `add(int a, int b)`, and write unit tests for it. The development process is:
+
+1) Create a Maven project with JUnit dependency 🎯
+
+2) Create test package, write unit test and run test 🎯
+
+* The Maven dependency is:
+
+```xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.8.2</version>
+    <scope>test</scope>
+</dependency>
+```
+
+* The scope is saying that this is for **testing** only, not for normal execution of the code
+
+* We shall setup a `test` package and follow the convention of matching the package structure of the `main` package
+
+* Unit tests have the following structure:
+
+    1) Setup
+    2) Execute
+    3) Assert
+
+* We use the `@Test` annotation above the test method.
+
+* We setup by instantiating thr `DemoUtil`, execute the `add()` method and assert the expected result
+
+* We then run the test in the IDE
+
+### 🟥 JUnit Assertions
+
+* `JUnit` has a collection of assertions which are defined in `org.junit.jupiter.api.Assertions`
+
+* The assertion methods include:
+
+1) `assertEquals(expected, actual, optionalReturnMessage)`
+
+2) `assertNotEquals(unexpected, actual, optionalReturnMessage)`
+
+2) `assertNull(actual, optionalReturnMessage)`
+
+4) `assertNotNull(actual, optionalReturnMessage)`
+
+
+### 🟥 Static Import
+
+* We can import the methods from `Assertions` class statically, so we can call the methods without referencing the class
+
+```java
+import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
+```
+
+
+###  🖥️Code Demo 🖥️
+
+* I download the code repository from [https://github.com/darbyluv2code/spring-boot-unit-testing](https://github.com/darbyluv2code/spring-boot-unit-testing)
 
 ## 🟦 H2
 
