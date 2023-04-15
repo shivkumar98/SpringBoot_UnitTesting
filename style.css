@@ -6,11 +6,16 @@ p,ol{
 h1 {font: sans-serif;
 font: size 23px;
 font-weight:bold;
-color:rgb(226, 111, 226)}
+color:rgb(226, 111, 226);
+border-bottom: 4px solid white;
+
+}
 h2 {font: sans-serif;
 font-size:22px;
 font-weight:bold;
-color: rgb(87, 126, 235)}
+color: rgb(87, 126, 235);
+border-bottom: 3px solid rgb(117, 117, 117);
+}
 h3 {font: sans-serif;
 font-size:18px;
 font-weight:bold;
@@ -18,7 +23,7 @@ color: rgb(216, 122, 122);
 }
 h4 {
     font: sans-serif;
-    font-size:18px;
+    font-size:14px;
 font-weight:bold;
 color:  rgb(216, 156, 103) ;
 }
