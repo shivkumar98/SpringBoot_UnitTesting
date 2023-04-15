@@ -169,7 +169,7 @@ import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
 
 * I download the code repository from [https://github.com/darbyluv2code/spring-boot-unit-testing](https://github.com/darbyluv2code/spring-boot-unit-testing)
 
-* I copy `1.00-starting-project` into [this](/Demos/demo-1/) folder
+* I copy `1.00-starting-project` into [this](/Demos/demo-01-project_setup/) folder
 
 * I open up the [POM](/Demos/demo-1/1.00-starting-project/pom.xml) in intelliJ and see this:
 
@@ -322,6 +322,105 @@ BeforeEach executes before each test method
 Running test: testEqualsAndNotEquals
 Running @AfterEach
 ```
+
+
+<br>
+
+## 🟦 2.5 Defining Custom Display Names
+
+### 🟥 Custom Display Names
+
+* The name of the methods show up in the test results
+
+* We can use custom display names to provided descriptive names for each tests
+
+* 🎃 We use `@DisplayName` to make a custom display name 🎃
+
+* We can add this annotation below the `@Test` annotation:
+
+```java
+    @Test
+    @DisplayName("Null and not null")
+    void testNullAndNotNull(){
+        // test implementation ....
+    }
+```
+
+### 🟥 Display Name Generators
+
+* JUnit can create display names for you:
+
+1) `Simple` - removes the () for you
+
+2) `ReplaceUnderscores` - this replaces _ with spaces
+
+3) `IndicativeSentences` - creates name based on test class name and method name
+
+* We can use generators WITHOUT using `@DisplayName` for every method. We can define one main annotation at class level using `@DisplayNameGeneration` (⚠️can not use it on methods!)
+
+#### 🟧 Simple Generator
+
+```java
+@DisplayNameGeneration(DisplayNameGenerator.Simple.class)
+class DemoUtilsTest {
+    //....
+}
+```
+
+#### 🟧 Replace Underscores Generator
+
+```java
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+class DemoUtilsTest {
+    // ...
+}
+```
+
+#### 🟧 Indicatibe Sentences Generatro
+
+```java
+@DisplayNameGeneration(DisplayNameGenerator.IndicativeSentences.class)
+class DemoUtilsTest {
+    // ...
+}
+```
+
+<hr>
+
+###  🖥️⌨️🖱️ Code Demo 🖱️⌨️🖥️
+
+* I start working on the demo [here](/Demos/demo-02-name_generators/)
+
+* Using the following annotation:
+
+```java
+@DisplayNameGeneration(DisplayNameGenerator.Simple.class)
+public class DemoUtilsTest {
+    // ....
+}
+```
+
+* This displays:
+
+![](2023-04-15-15-03-13.png)
+
+* I can override the generation at class level:
+
+```java
+    @Test
+    @DisplayName("This tests shows equality")
+    void testEqualsAndNotEquals(){
+        System.out.println("Running test: testEqualsAndNotEquals");
+
+        // using assertEquals and NotEquals:
+        assertEquals(6, demoUtils.add(2,4), "2+4 should equal 6");
+        assertNotEquals(6, demoUtils.add(1,9), "1+9 should not be 6");
+    }
+```
+
+* This displays:
+
+![](2023-04-15-15-05-11.png)
 
 
 ## 🟦 H2
