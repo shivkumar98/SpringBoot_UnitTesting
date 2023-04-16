@@ -211,7 +211,7 @@ import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
 
 * I add a new package into the `test` package and the `DemoUtilTest` class:
 
-![](2023-04-15-12-39-51.png)
+![](screenshots/2023-04-15-12-39-51.png)
 
 * I write the test:
 
@@ -228,7 +228,7 @@ import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
 
 * I run the test and it passes as expected:
 
-![](2023-04-15-12-54-48.png)
+![](screenshots/2023-04-15-12-54-48.png)
 
 * I create a method for checking Nulls:
 
@@ -267,7 +267,7 @@ import static org.junit.jupiter.api.Assertions.*; // imports ALL methods
 
 ### 🟥 Execution Sequence
 
-![](2023-04-15-13-08-24.png)
+![](screenshots/2023-04-15-13-08-24.png)
 
 <hr>
 
@@ -652,7 +652,7 @@ public class DemoUtilsTest {
 
 * Then the test results look like:
 
-![](2023-04-16-09-37-20.png)
+![](screenshots/2023-04-16-09-37-20.png)
 
 * 💡 The rest of the tests follow the deterministic algorithmic ordering 💡
 
@@ -672,35 +672,35 @@ public class DemoUtilsTest {
 
 * In order to see the report in intelliJ, you right-click and go to:
 
-    ![](2023-04-16-09-55-05.png)
+    ![](screenshots/2023-04-16-09-55-05.png)
 
 * We can see the code coverage in the `DemoUtils` class:
 
-    ![](2023-04-16-10-37-48.png)
+    ![](screenshots/2023-04-16-10-37-48.png)
 
     * We can see the red lines means not covered and green means code is covered
 
 * We can generate a report by clicking on:
 
-    ![](2023-04-16-10-38-55.png)
+    ![](screenshots/2023-04-16-10-38-55.png)
 
 * We then get a promp for where to store the report:
 
-    ![](2023-04-16-10-39-33.png)
+    ![](screenshots/2023-04-16-10-39-33.png)
 
 * If we open up the report, and navigate to the class:
 
-    ![](2023-04-16-10-40-11.png)
+    <img src="screenshots/2023-04-16-10-40-11.png" width="500px">
 
     * We can see the `muliply()` method has not been covered, so we could write a test for it
 
 * If we want to generate a test report, we can click on:
 
-    ![](2023-04-16-10-41-44.png)
+    <img src="screenshots/2023-04-16-10-41-44.png" width="500px">
 
 * Opening the report shows:
 
-![](2023-04-16-10-42-28.png)
+    <img src="screenshots/2023-04-16-10-42-28.png" width="500px">
 
 ## 🟦 H2
 
