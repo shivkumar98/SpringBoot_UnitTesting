@@ -591,6 +591,74 @@ public class DemoUtils {
     }
 ```
 
+
+<br>
+
+## 🟦 2.9 Ordering JUnit Tests
+
+### 🟥 Introduction
+
+* We can visually change the order of the test report in the IDE. Without any ordering the test results looks like:
+
+![](2023-04-16-09-19-56.png)
+
+* By default, the tests are deterministic but sorted in a pseudo random way intentionally.
+
+* ⚠️In general, ordering should not actually be part of the tests. Unit testing is meant to be independent!⚠️
+
+### 🟥 How to Order Tests
+
+* We can use the `@TestMethodOrder()` annotation to specify ordering.
+
+* We have 4 ways of ordering:
+
+1) `MethodOrderer.DisplayName` sorts test methods alphanumerically using display names
+
+2) `MethodOrderer.MethodName` sorts tests methods alphanumerically using method names
+
+3) `MethodOrderer.Random` sorts test methods randomly!
+
+4) `MethodOrderer.OrderAnnotation` sorts method based on `@Order` annotation
+
+### 🟥 Using @Order
+
+* The `@Order` annotation lets us specify priority of a test using an `int`
+
+* E.g., if we have the following ordering:
+
+```java
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayNameGeneration(DisplayNameGenerator.Simple.class)
+public class DemoUtilsTest {
+
+    DemoUtils demoUtils= new DemoUtils();
+
+    @Order(1)
+    @Test
+    @DisplayName("This tests shows equality")
+    void testEqualsAndNotEquals(){
+        // ....
+    }
+
+    @Order(-33)
+    @Test
+    void testNullAndNotNull() {
+        // ....
+    }
+
+    // other tests with no annotation
+}
+```
+
+* Then the test results look like:
+
+![](2023-04-16-09-37-20.png)
+
+* 💡 The rest of the tests follow the deterministic algorithmic ordering 💡
+
+* 💡 If there are duplicate entries, then it will be ordered using the algorithm forementioned 💡
+
+
 ## 🟦 H2
 
 ### 🟥 H3
