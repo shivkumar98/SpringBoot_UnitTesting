@@ -402,7 +402,7 @@ public class DemoUtilsTest {
 
 * This displays:
 
-![](2023-04-15-15-03-13.png)
+![](screenshots/2023-04-15-15-03-13.png)
 
 * I can override the generation at class level:
 
@@ -420,7 +420,7 @@ public class DemoUtilsTest {
 
 * This displays:
 
-![](2023-04-15-15-05-11.png)
+![](screenshots/2023-04-15-15-05-11.png)
 
 <br>
 
@@ -600,7 +600,7 @@ public class DemoUtils {
 
 * We can visually change the order of the test report in the IDE. Without any ordering the test results looks like:
 
-![](2023-04-16-09-19-56.png)
+![](screenshots/2023-04-16-09-19-56.png)
 
 * By default, the tests are deterministic but sorted in a pseudo random way intentionally.
 
@@ -941,7 +941,7 @@ void testOnlyOnMAC() { /* ... */}
 void testOnlyOnWindowsOrMAC() { /* ... */}
 ```
 
-![](screenshots/2023-04-16-12-26-37.png)
+    ![](screenshots/2023-04-16-12-26-37.png)
 
 
 ### 🟥 Annotations - EnabledOnJre and EnabledOnJreRange
