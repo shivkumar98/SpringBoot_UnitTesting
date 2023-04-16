@@ -2,6 +2,8 @@ package com.luv2code.junitdemo;
 
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.Simple.class)
@@ -45,6 +47,27 @@ public class DemoUtilsTest {
     }
 
     @Test
+    void arrayIsDeeplyEqual(){
+        String[] firstThreeLetters = {"A", "B", "C"};
+        assertArrayEquals(firstThreeLetters, new String[] {"A", "B", "C"}); // PASSES!
+
+        // assertArrayEquals(firstThreeLetters, new String[] {"A", "C", "B"}); // FAILS!!
+    }
+
+    @Test
+    void iterableIsDeeplyEqual(){
+        List<String> list = List.of("Shiv", "Likes", "Java");
+        assertIterableEquals(list, List.of("Shiv","Likes", "Java")); // PASSES!
+        // assertIterableEquals(list, List.of("Shiv","Likes")); // FAILS!
+    }
+
+    @Test
+    void LinesShouldMatch(){
+        List<String> list = List.of("Shiv", "Likes", "Java");
+        assertLinesMatch(list, List.of("Shiv","Likes","Java")); // PASSES!!
+        // assertLinesMatch(list, List.of("Shiv","Java","Likes")); // FAILS!!
+    }
+
 
     /*
 

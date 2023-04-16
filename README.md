@@ -456,6 +456,49 @@ public class DemoUtilsTest {
     }
 ```
 
+<br>
+
+## 🟦 2.7 Arrays, Iterable and Lines
+
+### 🟥 assertArrayEquals() Method
+
+* The `assertArrayEquals()` method asserts two object arrays are deeply equal (content is the same)
+
+```java
+    @Test
+    void arrayIsDeeplyEqual(){
+        String[] firstThreeLetters = {"A", "B", "C"};
+        assertArrayEquals(firstThreeLetters, new String[] {"A", "B", "C"}); // PASSES!
+        // assertArrayEquals(firstThreeLetters, new String[] {"A", "C", "B"}); // FAILS!!
+    }
+```
+
+### 🟥 assertIterableEquals() Method
+
+* The `assertIterableEquals()` method asserts iterable objects are deeply equal! Classes which implement Iterable include LinkedList, ArrayList, HashSet, ...
+
+```java
+    @Test
+    void iterableIsDeeplyEqual(){
+        List<String> list = List.of("Shiv", "Likes", "Java");
+        assertIterableEquals(list, List.of("Shiv","Likes", "Java")); // PASSES!
+        // assertIterableEquals(list, List.of("Shiv","Likes")); // FAILS!
+    }
+```
+
+### 🟥 assertLinesEquals() Method
+
+* The `assertLinesMatch` asserts that list of Strings match!
+
+```java
+    @Test
+    void LinesShouldMatch(){
+        List<String> list = List.of("Shiv", "Likes", "Java");
+        assertLinesMatch(list, List.of("Shiv","Likes","Java")); // PASSES!!
+        // assertLinesMatch(list, List.of("Shiv","Java","Likes")); // FAILS!!
+    }
+```
+
 
 ## 🟦 H2
 
