@@ -1,6 +1,7 @@
 package com.luv2code.junitdemo;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 import java.util.List;
@@ -114,13 +115,47 @@ public class DemoUtilsTest {
 
     }
 
-    @Test
-    void purposlyFailingTest(){
-        assertTrue(false);
-    }
-
-
     /*
+
+     /*
+         @Test
+    @Disabled("Do not run till issue fixed")
+    void someIgnoredTest() { /* ... }
+
+    @Test
+    @EnabledOnOs(OS.MAC)
+    void testOnlyOnMAC() { /* ... }
+
+    @Test
+    @EnabledOnOs({OS.WINDOWS, OS.MAC})
+    void testOnlyOnWindowsOrMAC() { /* ...}
+     */
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_17)
+    @Order(10)
+    void testOnlyForJRE17(){    }
+
+    @Test
+    @Order(11)
+    @EnabledForJreRange(min = JRE.JAVA_17)
+    void testForAnythingAbove16() {}
+
+    @Test
+    @Order(12)
+    @DisabledForJreRange(max = JRE.JAVA_17)
+    void testDisabledForAnyJREBelow18(){} // DOES NOT RUN
+
+
+    @Test
+    @Order(13)
+    @EnabledIfEnvironmentVariable(named = "MAVEN_HOME", matches = "C:\\\\apache-maven-3.6.3")
+    void testShouldBeExecuted(){}
+
+    @Test
+    @Order(14)
+    @EnabledIfEnvironmentVariable(named = "MAVEN_HOME", matches = "hello world")
+    void testShouldNotBeExecuted() {}
 
     @BeforeAll
     static void setUpBeforeAllMethods(){ // MUST BE STATIC
@@ -143,5 +178,5 @@ public class DemoUtilsTest {
         System.out.println("Running @AfterEach");
     }
 
-     */
+
 }

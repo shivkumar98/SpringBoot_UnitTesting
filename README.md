@@ -906,11 +906,88 @@ public class DemoUtilsTest {
 </plugin>
 ```
 
-* We now run `mvn clean test`
+* We now run `mvn clean test` and the code generate report is created:
+
+
+    ![](screenshots/2023-04-16-12-17-31.png)
 
 
 
+<br>
 
+## 🟦 2.12 Conditional Tests
+
+### 🟥 Why?
+
+* We may want to disable a given test, or have a test which only runs on specific versions of Java, or or run on a specific OS.
+
+### 🟥 Annotations - Disabled and EnabledOnOS
+
+* `@Disabled` - the test will not be executed but STILL show in the test reports.
+
+* `@EnabledOnOs` - we can specify an OS, or multiple OS's in an array
+
+```java
+@Test
+@Disabled("Do not run till issue fixed")
+void someIgnoredTest() { /* ... */}
+
+@Test
+@EnabledOnOs(OS.MAC)
+void testOnlyOnMAC() { /* ... */}
+
+@Test
+@EnabledOnOs({OS.WINDOWS, OS.MAC})
+void testOnlyOnWindowsOrMAC() { /* ... */}
+```
+
+![](screenshots/2023-04-16-12-26-37.png)
+
+
+### 🟥 Annotations - EnabledOnJre and EnabledOnJreRange
+
+* We can disable/enable a test for a particular JRE or range:
+
+```java
+    @Test
+    @EnabledOnJre(JRE.JAVA_17)
+    @Order(10)
+    void testOnlyForJRE17(){ } 
+
+    @Test
+    @Order(11)
+    @EnabledForJreRange(min = JRE.JAVA_17)
+    void testForAnythingAbove16() { } 
+
+    @Test
+    @Order(12)
+    @DisabledForJreRange(max = JRE.JAVA_17)
+    void testDisabledForAnyJREBelow18(){} // DOES NOT RUN
+```
+
+* The Result is:
+
+    ![](screenshots/2023-04-16-12-37-27.png)
+
+### 🟥 Annotations - EnabledIfSystemProperty and EnabledIfEnvironmentVariable
+
+* We can enable/disable tests depending on system properties or environment variable
+
+```java
+    @Test
+    @Order(13)
+    @EnabledIfEnvironmentVariable(named = "MAVEN_HOME", matches = "C:\\\\apache-maven-3.6.3")
+    void testShouldBeExecuted(){}
+
+    @Test
+    @Order(14)
+    @EnabledIfEnvironmentVariable(named = "MAVEN_HOME", matches = "hello world")
+    void testShouldNotBeExecuted() {}
+```
+
+* This displays:
+
+    ![](screenshots/2023-04-16-12-49-37.png)
 
 ## 🟦 H2
 
