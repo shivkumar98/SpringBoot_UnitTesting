@@ -702,6 +702,216 @@ public class DemoUtilsTest {
 
     <img src="screenshots/2023-04-16-10-42-28.png" width="500px">
 
+
+<br>
+
+## 🟦 2.11 Unit Testing Code Coverage with Maven
+
+### 🟥 Maven
+
+* We can also do Code coverage using Maven in the command line!
+
+* You must have Maven installed (download [here](https://maven.apache.org/download.cgi)) - make sure to download the binary!
+
+### 🟥 Configuring Maven
+
+* 💡 By default Maven will NOT find JUnit 5 tests, we must configure it! We can add Maven Surefire plugin version 2.22.0 or higher. I add the following to the POM:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifaceId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M5</version>
+        </plugin>
+    </plugins>
+</build>
+```
+
+### 🟥 Running Unit Tests
+
+* I navigated to my projects source folder ([here](/Demos/demo-05-testing_with_maven/1.00-starting-project/))
+
+* I ran `mvn clean test` and the test ran in the command prompt!:
+
+    ![](screenshots/2023-04-16-11-20-58.png)
+
+### 🟥 Generating Unit Test Reports
+
+* We can use the SureFire plugin to generate unit test reports! We need to add some information to the `<plugin>` tag:
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>3.0.0-M5</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>test</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+* This saying, during "test" phase execute the "report" goal
+
+* Re-running `mvn clean test`
+
+* The report gets generated here:
+
+![](screenshots/2023-04-16-11-34-48.png)
+
+* By default, Surefire will not generate reports if test fails. We can add a configuration to the plugin in the POM xml:
+
+```xml
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+
+    </plugin>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <executions>
+            <execution>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+</plugins>
+```
+
+* If we run `mvn clean test` then we get reports with no stylings:
+
+    ![](screenshots/2023-04-16-11-50-01.png)
+
+* We need to execute another command, to allow for the css and images: `mvn site -DgenerateRerports=false`
+
+* Our report is now styled:
+
+    ![](screenshots/2023-04-16-11-52-34.png)
+
+* We need to enable the report to be generated WHEN tests FAIL! We need to add a configuration:
+
+```xml
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+            <testFailureIgnore>true</testFailureIgnore>
+        </configuration>
+    </plugin>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <executions>
+            <execution>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+</plugins>
+```
+
+* I'll add a failing test and rerun `mvn clean install` and `mvn site -DgenerateReports=false`
+
+```java
+    @Test
+    void purposlyFailingTest(){
+        assertTrue(false);
+    }
+```
+
+* And the report generates🎉:
+
+    ![](screenshots/2023-04-16-11-59-03.png)
+
+* We also need to configure the reports to show the Display names!!! I search the maven repo wiki and find: [this](https://maven.apache.org/surefire/maven-surefire-plugin/examples/junit-platform.html#surefire-extensions-and-reports-configuration-for-displayname):
+
+* I update the POM:
+
+```xml
+ <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>3.0.0-M5</version>
+    <configuration>
+        <testFailureIgnore>true</testFailureIgnore>
+
+        <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+            <usePhrasedFileName>false</usePhrasedFileName>
+            <usePhrasedTestSuiteClassName>true</usePhrasedTestSuiteClassName>
+            <usePhrasedTestCaseClassName>true</usePhrasedTestCaseClassName>
+            <usePhrasedTestCaseMethodName>true</usePhrasedTestCaseMethodName>
+        </statelessTestsetReporter>
+        <consoleOutputReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5ConsoleOutputReporter">
+            <disable>false</disable>
+            <encoding>UTF-8</encoding>
+            <usePhrasedFileName>false</usePhrasedFileName>
+        </consoleOutputReporter>
+        <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoReporter">
+            <disable>false</disable>
+            <usePhrasedFileName>false</usePhrasedFileName>
+            <usePhrasedClassNameInRunning>true</usePhrasedClassNameInRunning>
+            <usePhrasedClassNameInTestCaseSummary>true</usePhrasedClassNameInTestCaseSummary>
+        </statelessTestsetInfoReporter>
+    </configuration>
+</plugin>
+```
+
+* Now the report shows display names:
+
+    ![](screenshots/2023-04-16-12-06-21.png)
+
+### 🟥 Generating Code Coverage Reports
+
+* We need another pluging:
+
+```xml
+ <plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.7</version>
+
+    <executions>
+        <execution>
+            <id>jacoco-prepare</id>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>jacoco-report</id>
+            <phase>test</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+* We now run `mvn clean test`
+
+
+
+
+
 ## 🟦 H2
 
 ### 🟥 H3
