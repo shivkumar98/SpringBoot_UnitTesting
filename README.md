@@ -40,7 +40,7 @@
 <br>
 <hr>
 
-# 🟪 Section 2 - Unit Testing
+# 🟪 Section 2 - JUnit Review
 
 ## 🟦 2.1 Unit Testing Overview
 
@@ -658,6 +658,49 @@ public class DemoUtilsTest {
 
 * 💡 If there are duplicate entries, then it will be ordered using the algorithm forementioned 💡
 
+<br>
+
+## 🟦 2.10 Unit Testing Code Coverage with IntelliJ
+
+### 🟥 Code Coverage
+
+* 💡 Code coverage measures how many of the methods and lines are called via your test 💡
+
+* 🎃 We should strive for 70-80% code coverage, 100% code coverage can be achieved but would not be a meaningful metric 🎃
+
+* IntelliJ has built in support for code coverage! We can also generate reports using Maven in command line
+
+* In order to see the report in intelliJ, you right-click and go to:
+
+    ![](2023-04-16-09-55-05.png)
+
+* We can see the code coverage in the `DemoUtils` class:
+
+    ![](2023-04-16-10-37-48.png)
+
+    * We can see the red lines means not covered and green means code is covered
+
+* We can generate a report by clicking on:
+
+    ![](2023-04-16-10-38-55.png)
+
+* We then get a promp for where to store the report:
+
+    ![](2023-04-16-10-39-33.png)
+
+* If we open up the report, and navigate to the class:
+
+    ![](2023-04-16-10-40-11.png)
+
+    * We can see the `muliply()` method has not been covered, so we could write a test for it
+
+* If we want to generate a test report, we can click on:
+
+    ![](2023-04-16-10-41-44.png)
+
+* Opening the report shows:
+
+![](2023-04-16-10-42-28.png)
 
 ## 🟦 H2
 
