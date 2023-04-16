@@ -2,6 +2,7 @@ package com.luv2code.junitdemo;
 
 import org.junit.jupiter.api.*;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,6 +67,48 @@ public class DemoUtilsTest {
         List<String> list = List.of("Shiv", "Likes", "Java");
         assertLinesMatch(list, List.of("Shiv","Likes","Java")); // PASSES!!
         // assertLinesMatch(list, List.of("Shiv","Java","Likes")); // FAILS!!
+    }
+
+    @Test
+    void testThrowsAndDoesNotThrow() {
+        assertThrows(Exception.class,
+                     ()->{ demoUtils.throwException(-1); },
+                   "An exception should be thrown"); // PASSES!!
+
+        assertThrows(Exception.class,
+                ()-> {throw new RuntimeException();},
+                "Should throw Exception class"); // PASSES
+
+        /* assertThrows(RuntimeException.class,
+                ()-> { throw new Exception();},
+                "Should throw RuntimeException class"); // FAILS
+         */
+
+        assertDoesNotThrow(()-> {demoUtils.throwException(1);} ); // PASSES!!
+
+    }
+
+    @Test
+    void testTimeOutAndTimeOutPremptively(){
+        assertTimeout(Duration.ofSeconds(3), ()-> {demoUtils.checkTimeout(); } ); // PASSES!
+        /* CONSOLE:
+            I am going to sleep
+            Sleeping over
+         */
+
+        // assertTimeout(Duration.ofSeconds(2), ()-> {demoUtils.checkTimeout(); } ); // FAILS!
+        /* CONSOLE:
+            I am going to sleep
+            Sleeping over
+            org.opentest4j.AssertionFailedError: execution exceeded timeout of 2000 ms by 6 ms
+         */
+
+        // assertTimeoutPreemptively(Duration.ofSeconds(1), ()->{demoUtils.checkTimeout();} ); // FAILS!
+        /* CONSOLE
+            I am going to sleep
+            org.opentest4j.AssertionFailedError: execution timed out after 1000 ms
+         */
+
     }
 
 

@@ -469,7 +469,7 @@ public class DemoUtilsTest {
     void arrayIsDeeplyEqual(){
         String[] firstThreeLetters = {"A", "B", "C"};
         assertArrayEquals(firstThreeLetters, new String[] {"A", "B", "C"}); // PASSES!
-        // assertArrayEquals(firstThreeLetters, new String[] {"A", "C", "B"}); // FAILS!!
+        assertArrayEquals(firstThreeLetters, new String[] {"A", "C", "B"}); // FAILS!!
     }
 ```
 
@@ -482,7 +482,7 @@ public class DemoUtilsTest {
     void iterableIsDeeplyEqual(){
         List<String> list = List.of("Shiv", "Likes", "Java");
         assertIterableEquals(list, List.of("Shiv","Likes", "Java")); // PASSES!
-        // assertIterableEquals(list, List.of("Shiv","Likes")); // FAILS!
+        assertIterableEquals(list, List.of("Shiv","Likes")); // FAILS!
     }
 ```
 
@@ -495,10 +495,101 @@ public class DemoUtilsTest {
     void LinesShouldMatch(){
         List<String> list = List.of("Shiv", "Likes", "Java");
         assertLinesMatch(list, List.of("Shiv","Likes","Java")); // PASSES!!
-        // assertLinesMatch(list, List.of("Shiv","Java","Likes")); // FAILS!!
+        assertLinesMatch(list, List.of("Shiv","Java","Likes")); // FAILS!!
     }
 ```
 
+<br>
+
+## 🟦 2.8 Assertion for Throws and Timeouts
+
+### 🟥 Assertion For Throws
+
+* `assertThrows(Class expectedType, Executable executable)` - asserts if an exception is throw in a given lambda
+
+* `assertDoesNotThrow(Executable executable)` - asserts that ANY exception is not thrown
+
+
+* The `DemoUtils` class has the following method:
+
+```java
+public class DemoUtils {
+    public String throwException(int a) throws Exception {
+        if (a<0)
+            throw new Exception("Value should be greater than or equal to 0");
+        return "Value is greater than or equal to 0";
+    }
+}
+```
+
+* We can write a test:
+
+
+```java
+    @Test
+    void testThrowsAndDoesNotThrow() {
+        assertThrows(Exception.class,
+                     ()->{ demoUtils.throwException(-1); },
+                   "An exception should be thrown"); // PASSES!!
+
+        assertThrows(Exception.class,
+                ()-> {throw new RuntimeException();},
+                "Should throw Exception class"); // PASSES
+
+        assertThrows(RuntimeException.class,
+                ()-> { throw new Exception();},
+                "Should throw RuntimeException class"); // FAILS
+        
+
+        assertDoesNotThrow(()-> {demoUtils.throwException(1);} ); // PASSES!!
+
+    }
+```
+
+### 🟥 Assertion for Timeouts
+
+* `assertTimeOut(Duration stimeout, Executable executable)` - asserts that execution completes before time out is exeeded
+
+* `assertTimeoutPreemptively(Duration timeout, Executable executable)` - again, asserts execution completes before timeout is exceeded, but also aborts execution after timeout
+
+* The `DemoUtils` class has the following method:
+
+```java
+public class DemoUtils {
+    public void checkTimeOut() throws InterruptedException {
+        System.out.println("I am going to sleep");
+        Thread.sleep(2000);
+        System.out.println("Sleeping over");
+    }
+}
+```
+
+* I write the following test:
+
+```java
+    @Test
+    void testTimeOutAndTimeOutPremptively(){
+        assertTimeout(Duration.ofSeconds(3), ()-> {demoUtils.checkTimeout(); } ); // PASSES!
+        /* CONSOLE:
+            I am going to sleep
+            Sleeping over
+         */
+
+        assertTimeout(Duration.ofSeconds(2), ()-> {demoUtils.checkTimeout(); } ); // FAILS!
+        /* CONSOLE:
+            I am going to sleep
+            Sleeping over
+            org.opentest4j.AssertionFailedError: execution exceeded timeout of 2000 ms by 6 ms
+         */
+
+        assertTimeoutPreemptively(Duration.ofSeconds(1), ()->{demoUtils.checkTimeout();} ); // FAILS!
+        /* CONSOLE
+            I am going to sleep
+            org.opentest4j.AssertionFailedError: execution timed out after 1000 ms
+         */
+
+    }
+```
 
 ## 🟦 H2
 
