@@ -13,7 +13,7 @@
 
 # 🟪 Section 1 - Introduction
 
-## 🟦 Course Introduction
+## 🟦 1.1 Course Introduction
 
 * Spring Boot supports unit test and integration testing vvia JUnit and Mockito
 
@@ -29,7 +29,7 @@
 
     4) Spring Boot Testing Spring REST APIs
 
-## 🟦 Setting up Dev environment
+## 🟦 1.2 Setting up Dev environment
 
 * Dev environment will be intelliJ for Maven support, and MySQL Database Server and Workbench
 
@@ -1060,7 +1060,7 @@ public class FizzBuzz {
 
 * The test fails as expected:
 
-![](2023-04-24-10-40-39.png)
+    ![](screenshots/2023-04-24-10-40-39.png)
 
 * I update the method, so that the test passes:
 
