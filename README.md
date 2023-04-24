@@ -1164,9 +1164,111 @@ public class FizzBuzz {
 
 * All tests still pass!
 
+## 🟦 3.3 Parameterised Tests
 
-## 🟦 Course Introduction
+### Introduction
 
+*  Suppose we want to pass a collection of inputs and expected results for our FizzBuzz program
+
+* One way could be to use an array:
+
+```java
+void testLoopOverArray(){
+    String[][] data = { { "1", "1"},
+                        { "2", "2"},
+                        { "3", "Fizz"},
+                        { "4", "4"},
+                        { "5", "Buzz"},
+                        { "6", "Fizz"},
+                        { "7", "7"},
+                      };
+    
+    for (int i=0; i<data.length; i++){
+        String actual = data[i][0];
+        String expected = data[i][1];
+        assertEquals(expected, FizzBuzz.compute(Integer.parseInt(value)));
+    }
+}
+```
+
+* 😱 JUnit provides `@ParameterizedTest` which lets you run a test multiple times with different parameters. It does the looping for you in the background😮‍💨😮‍💨😮‍💨
+
+* We can provide the parameters using an array of values✅, array of CSV Strings✅, CSV values from a file✅, an enum✅ or even a custom method✅
+
+| Annotation     | Description      |
+|----------------|------------------|
+|`@ValueSource`     | Arrays of values |
+|`@CsvFileSource`   | CSV values read from a file |
+|`@CscSource`       | CSV values from a String  |
+|`@EnumSource`      | Enum constant values        |
+|`@MethodSource`    | Custom method for providing values |
+
+
+
+### 🟥 Code Demo - Using CSV Files
+
+```java
+@ParameterizedTest
+@CsvSource({"1,1",
+            "2,2",
+            "3,Fizz",
+            "4,4",
+            "5,Buzz",
+            "6,Fizz",
+            "15,FizzBuzz"})
+void testUsingParameters(int number, String result){
+    assertEquals(FizzBuzz.compute(number), result);
+}
+```
+
+* I create a CSV file in a new directory:
+
+![](2023-04-24-13-31-53.png)
+
+* I create a parameterised test which uses a CSV file source:
+
+```java
+@ParameterizedTest(name = "value={0}, expected={1}")
+@CsvFileSource(resources = "/small-test-data.csv")
+void test(int value, String expected){
+    assertEquals(FizzBuzz.compute(value), expected);
+}
+```
+
+* I specified a name on the @ParameterizedTest annotation to override the display name for each test!
+
+* I copy `large-test-data.csv` and `medium-test-data.csv` into my resources:
+
+![](2023-04-24-13-43-35.png)
+
+* I create a new method to test the large CSV:
+
+```java
+@ParameterizedTest(name="value:{0}, expected:{1}")
+@CsvFileSource(resources = "/large-test-data.csv")
+void testWithLargeData(int value, String expected){
+    assertEquals(FizzBuzz.compute(value), expected);
+}
+```
+
+
+## 🟦 3.4 Finishing the FizzBuzz Program
+
+* The initial task was to write the numbers from 1 to 100 using FizzBuzz!
+
+* I define a `MainApp` class in the tdd package in main
+
+```java
+public class MainApp {
+    public static void main(String[] args) {
+        for (int i=1;i<=100;i++){
+            System.out.println(FizzBuzz.compute(i));
+        }
+    }
+}
+```
+
+* The app works as expected!!!
 
 ## 🟦 H2
 
