@@ -1384,6 +1384,142 @@ public class ApplicationExampleTest {
 
 * Suppose we have a student grading system which was coded by a previous employee. The code does NOT use ANY unit tests😱 We have been tasked with devloping the unit tests
 
+<br>
+<hr>
+
+## 🟦 4.2 Project Setup
+
+* I open [2.00-starting-project](/spring-boot-unit-testing-main/2.00-starting-project/)
+
+    ![](2023-04-24-15-10-19.png)    
+
+* We have a `Student` interface:
+
+```java
+public interface Student {
+    String studentInformation();
+    String getFullName();
+}
+```
+
+* A `CollegeStudent` implementation:
+
+```java
+public class CollegeStudent implements Student {
+    private String firstname;
+    private String lastname;
+    private String emailAddress;
+    private StudentGrades studentGrades;
+    public CollegeStudent() {}
+    public CollegeStudent(String firstname, String lastname, String emailAddress) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.emailAddress = emailAddress; }
+    // GETTERS AND SETTERS ...
+    @Override
+    public String toString() {
+        return "CollegeStudent{" + "firstname='" +  + '\'' ", lastname='" + lastname + '\'' + ", emailAddress='" + emailAddress + '\'' + ", studentGrades=" + studentGrades +'}';
+    }
+    @Override
+    public String studentInformation() {
+        return getFullName() + " " + getEmailAddress();
+    }
+    @Override
+    public String getFullName() {
+        return getFirstname() + " " + getLastname();
+    }
+}
+```
+
+* A `StudentGrades` class:
+
+```java
+@Component
+public class StudentGrades {
+    List<Double> mathGradeResults;
+    /*
+     * CAN HAVE MULTIPLE DIFFERENT TYPES OF GRADES
+     * FOR 2.x WE WILL ONLY HAVE A MATH GRADE
+     *  */
+    public StudentGrades() {
+    }
+    public StudentGrades(List<Double> mathGradeResults) {
+        this.mathGradeResults = mathGradeResults;
+        /*
+        Add other subject grades here in future lessons
+        */
+    }
+        /*
+        Add other subject grades here in future lessons
+        */
+
+    public double addGradeResultsForSingleClass(List<Double> grades) {
+        double result = 0;
+        for (double i : grades) {
+            result += i;
+        }
+        return result;
+    }
+
+    public double findGradePointAverage (List<Double> grades ) {
+        int lengthOfGrades = grades.size();
+        double sum = addGradeResultsForSingleClass(grades);
+        double result = sum / lengthOfGrades;
+
+        // add a round function
+        BigDecimal resultRound = BigDecimal.valueOf(result);
+        resultRound = resultRound.setScale(2, RoundingMode.HALF_UP);
+        return resultRound.doubleValue();
+
+    }
+
+    public Boolean isGradeGreater(double gradeOne, double gradeTwo) {
+        if (gradeOne > gradeTwo) {
+            return true;
+        }
+        return false;
+    }
+
+    public Object checkNull(Object obj) {
+        if ( obj != null ) {
+            return obj;
+        }
+        return null;
+    }
+
+    public List<Double> getMathGradeResults() {
+        return mathGradeResults;
+    }
+
+    public void setMathGradeResults(List<Double> mathGradeResults) {
+        this.mathGradeResults = mathGradeResults;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentGrades{" +
+                "mathGradeResults=" + mathGradeResults +
+                '}';
+    }
+}
+```
+
+* And the Spring Boot Application class:
+
+```java
+@SpringBootApplication
+public class MvcTestingExampleApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(MvcTestingExampleApplication.class, args); }
+	@Bean(name = "collegeStudent")
+	@Scope(value = "prototype")
+	CollegeStudent getCollegeStudent() {
+		return new CollegeStudent();
+	}
+}
+```
+
+
 
 ## 🟦 H2
 
