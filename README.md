@@ -1015,7 +1015,7 @@ void testOnlyOnWindowsOrMAC() { /* ... */}
 
 * I created two tdd packages:
 
- ![](2023-04-24-10-33-17.png)
+    ![](screenshots/2023-04-24-10-33-17.png)
 
 * I define my test class:
 
@@ -1223,7 +1223,7 @@ void testUsingParameters(int number, String result){
 
 * I create a CSV file in a new directory:
 
-![](2023-04-24-13-31-53.png)
+    ![](screenshots/2023-04-24-13-31-53.png)
 
 * I create a parameterised test which uses a CSV file source:
 
@@ -1239,7 +1239,7 @@ void test(int value, String expected){
 
 * I copy `large-test-data.csv` and `medium-test-data.csv` into my resources:
 
-![](2023-04-24-13-43-35.png)
+    ![](screenshots/2023-04-24-13-43-35.png)
 
 * I create a new method to test the large CSV:
 
