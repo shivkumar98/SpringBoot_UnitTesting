@@ -989,6 +989,7 @@ void testOnlyOnWindowsOrMAC() { /* ... */}
 
     ![](screenshots/2023-04-16-12-49-37.png)
 
+<br>
 <hr>
 
 # 🟪 Section 3 - Test Driven Development
@@ -1269,6 +1270,120 @@ public class MainApp {
 ```
 
 * The app works as expected!!!
+
+<br>
+<hr>
+
+# 🟪 Section 4 - Spring Boot Unit Testing
+
+## 🟦 4.1 Overview
+
+### 🟥 Introduction
+
+* You need the following for unit testing Spring Boot applications: Access to Spring Application Context✅, support for dependency injection✅, Retrieve data from Spring application.properties✅, Mock object support for web, data, REST APIs... ✅
+
+* Spring Boot provided rich testing support.
+
+    - `@SpringBootTest`: loads application context, dependency injection support, access data from Spring application.properties
+
+### 🟥 Spring Boot Starter 
+
+* We can add spring-boot-starter-test which includes a transitive dependency on JUnit 5
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
+* If we look at the Maven dependency, we can see JUnit being listed:
+
+    ![](2023-04-24-14-21-35.png)
+
+### 🟥 Spring Boot Test - Injecting Dependencies
+
+```java
+@SpringBootTest
+public class ApplicationExampleTest {
+    @Test
+    void basicTest(){
+        // ...
+    }
+}
+```
+
+* The `@SpringBootTest` loads up the application context, this opens up the oppurtunity to inject dependencies. Suppose we have a `StudentGrades` component:
+
+```java
+@Component
+public class StudentGrades{
+    // ...
+}
+```
+
+* We can inject the dependency using `@Autowired`:
+
+```java
+@SpringBootTest
+public class ApplicationExampleTest {
+    @Autowired
+    StudentGrades studentGrades;
+
+    @Test
+    void basicTest(){
+        // ...
+    }
+}
+```
+
+### 🟥 Spring Boot Test - Accessing Properties
+
+* We can also access application properties. Suppose we have the following properties:
+
+```properties
+info.school.name=luv2code
+info.app.name=My super cool Gradebook
+```
+
+* We can access the properties witin out Test class:
+
+```java
+@SpringBootTest
+public class ApplicationExampleTest {
+    @Value("${info.school.name}")
+    private String schoolName;
+
+    @Value("${info.app.name}")
+    private String appInfo;
+
+    @Test
+    void basicTest(){}
+}
+```
+
+### 🟥 Spring Boot Test - Configuration
+
+* You can implicitly use the base searched package if you place your test class in test package same as your main package. 
+
+* E.g.:
+
+    ![](2023-04-24-15-00-04.png)
+
+* Suppose we wanted to place our Test class not in the default leveraged package (e.g. com.luv2code.test). We then need to make an an explicit reference to the main SpringBoot class:
+
+```java
+@SpringBootTest(classes = MvcTestingExampleApplication.class)
+public class ApplicationExampleTest {
+
+}
+```
+
+### 🟥 Our Sample Project
+
+* Suppose we have a student grading system which was coded by a previous employee. The code does NOT use ANY unit tests😱 We have been tasked with devloping the unit tests
+
 
 ## 🟦 H2
 
