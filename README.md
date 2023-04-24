@@ -989,6 +989,185 @@ void testOnlyOnWindowsOrMAC() { /* ... */}
 
     ![](screenshots/2023-04-16-12-49-37.png)
 
+<hr>
+
+# 🟪 Section 3 - Test Driven Development
+
+## 🟦 3.1 What is Test Driven Development?
+
+* In the past, development would have the following flow: Design ➡️ Code ➡️ Test.
+
+* TDD has the following cycle: Test ➡️ Code ➡️ Refactor 🔁
+
+* TDD is beneficial as it outlines the things to test and develop, identify edge cases, improve confidence in code base and the ability to refactor code!
+
+
+## 🟦 3.2 Fizz Buzz
+
+* Write a program which prints the first 100 FizzBuss numbers, if the number is
+
+    - divisible by 3 then print Fizz
+    - divisible by 5 then print Buzz
+    - divisible by 3 and 5 then print FizzBuzz
+    - number is not divisible by 3 or 5 then print the number
+
+### 🟥 Coding Demo - FizzBuzz
+
+* I created two tdd packages:
+
+ ![](2023-04-24-10-33-17.png)
+
+* I define my test class:
+
+```java
+public class FizzBuzzTest {
+    @Test
+    void testForDivisibleByThree(){
+        fail("fail");
+    }
+}
+```
+
+* I update my test:
+
+```java
+public class FizzBuzzTest {
+
+    @Test
+    void testForDivisibleByThree(){
+        assertEquals("Fizz", FizzBuzz.compute(3), "3 should return Fizz");
+    }
+}
+```
+
+* I create my FizzBuzz class in the src package:
+
+
+```java
+public class FizzBuzz {
+}
+```
+
+* I create the `compute()` method so the test passes!
+
+```java
+public class FizzBuzz {
+    public static String compute(int i) {
+        return null;
+    }
+}
+```
+
+* The test fails as expected:
+
+![](2023-04-24-10-40-39.png)
+
+* I update the method, so that the test passes:
+
+```java
+    public static String compute(int i) {
+        if (i % 3 == 0)
+            return "Fizz";
+        return null;
+    }
+```
+
+* I create a new test:
+
+```java
+  @Test
+    void testForDivisubleByFive(){
+        assertEquals("Buzz", FizzBuzz.compute(5), "5 should return Buzz");
+    }
+```
+
+* The test fails as expected! So I update the `compute()` method:
+
+```java
+ public static String compute(int i) {
+        if (i % 3 == 0)
+            return "Fizz";
+        else if (i % 5 ==0) {
+            return "Buzz";
+        }
+        return null;
+    }
+```
+
+* All tests now pass! I now write a test for 15 which should return FizzBuzz:
+
+```java
+    @Test
+    void testForDivisbleBy3And5(){
+        assertEquals("FizzBuzz", FizzBuzz.compute(15), "15 should return FizzBuzz");
+    }
+```
+
+* The test fails because Fizz returns! I update the `compute()` method:
+
+```java
+public static String compute(int i) {
+    if (i % 3 == 0 && i % 5 ==0)
+        return "FizzBuzz";
+    else if (i % 3 == 0)
+        return "Fizz";
+    else if (i % 5 ==0) {
+        return "Buzz";
+    }
+    return null;
+}
+```
+
+* I add a new test for a number which is neither Fizz or Buzz:
+
+```java
+    @Test
+    void testForNonFizzBuzzNumber(){
+        assertEquals("1", FizzBuzz.compute(1), "1 should return 1");
+    }
+```
+
+* It fails because it returns null! I update the `compute()` method again:
+
+```java
+public static String compute(int i) {
+    if (i % 3 == 0 && i % 5 ==0)
+        return "FizzBuzz";
+    else if (i % 3 == 0)
+        return "Fizz";
+    else if (i % 5 ==0) {
+        return "Buzz";
+    }
+    return ""+i;
+}
+```
+
+* All tests pass!
+
+### 🟥 Coding Demo - Refactoring FizzBuzz
+
+* Since we have all our test passing, we can now refactor our method!
+
+```java
+public class FizzBuzz {
+    public static String compute(int i){
+        StringBuilder sb = new StringBuilder();
+        if (i%3 == 0)
+            sb.append("Fizz");
+        if (i%5 == 0)
+            sb.append("Buzz");
+        if (sb.isEmpty())
+            sb.append(i);
+    }
+}
+```
+
+* All tests still pass!
+
+
+## 🟦 Course Introduction
+
+
 ## 🟦 H2
 
 ### 🟥 H3
