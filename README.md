@@ -1300,7 +1300,7 @@ public class MainApp {
 
 * If we look at the Maven dependency, we can see JUnit being listed:
 
-    ![](2023-04-24-14-21-35.png)
+    ![](screenshots/2023-04-24-14-21-35.png)
 
 ### 🟥 Spring Boot Test - Injecting Dependencies
 
@@ -1369,7 +1369,7 @@ public class ApplicationExampleTest {
 
 * E.g.:
 
-    ![](2023-04-24-15-00-04.png)
+    ![](screenshots/2023-04-24-15-00-04.png)
 
 * Suppose we wanted to place our Test class not in the default leveraged package (e.g. com.luv2code.test). We then need to make an an explicit reference to the main SpringBoot class:
 
@@ -1391,7 +1391,7 @@ public class ApplicationExampleTest {
 
 * I open [2.00-starting-project](/spring-boot-unit-testing-main/2.00-starting-project/)
 
-    ![](2023-04-24-15-10-19.png)    
+    ![](screenshots/2023-04-24-15-10-19.png)    
 
 * We have a `Student` interface:
 
@@ -1545,7 +1545,7 @@ public class MvcTestingExampleApplication {
 
 * I create a new directory and package:
 
-![](2023-04-25-08-56-01.png)
+    ![](screenshots/2023-04-25-08-56-01.png)
 
 * I define an `ApplicationExampleTest` class:
 
