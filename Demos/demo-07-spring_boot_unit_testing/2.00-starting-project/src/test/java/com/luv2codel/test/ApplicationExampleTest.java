@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = MvcTestingExampleApplication.class)
 public class ApplicationExampleTest {
@@ -68,5 +70,22 @@ public class ApplicationExampleTest {
     void addGradeResultsForStudentGradesAssertNotEqual(){
         assertNotEquals(100, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
         // actual is 353.25
+    }
+
+    @Test
+    @DisplayName("Is grades greater?")
+    void isGradeGreaterStudentGrades(){
+        assertTrue(studentGrades.isGradeGreater(999, 1));
+        //  Implementation:
+        //  if (gradeOne > gradeTwo) {
+        //      return true;
+        //  }
+        //      return false;
+    }
+
+    @Test
+    @DisplayName("Check Null for student grades")
+    void checkNullForGrades(){
+        assertNotNull(studentGrades.getMathGradeResults());
     }
 }

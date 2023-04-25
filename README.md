@@ -1559,7 +1559,7 @@ public class ApplicationExampleTest{
 
 * I change the package of the test class to `com.luv2code.component` to match consistency of the main application's package. The test passes as expected
 
-* IF we had issues with the test class not being able to load the configuration, THEN we can use the `@SpringBootTest` annotation and explicitly specify the SpringBoot application class:
+* ⚠️ IF we had issues with the test class not being able to load the configuration, THEN we can use the `@SpringBootTest` annotation and explicitly specify the SpringBoot application class: ⚠️
 
 ```java
 @SpringBootTest(classes = MvcTestingExampleApplication.class)
@@ -1645,24 +1645,54 @@ void beforeEach(){
 * I add a new test for adding student grades:
 
 ```java
-@Test
-@DisplayName("Add grade results for student grades")
-void addGradeResultsForStudentGrades(){
-    assertEquals(353.25, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
-}
+    @Test
+    @DisplayName("Add grade results for student grades")
+    void addGradeResultsForStudentGrades(){
+        assertEquals(353.25, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
+    }
 ```
 
 * Here is an assertNotEqualsTest:
 
 ```java
+    @Test
+    @DisplayName("Add grade results for student grades not equal")
+    void addGradeResultsForStudentGradesAssertNotEqual(){
+        assertNotEquals(100, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
+        // actual is 353.25
+    }
+```
+
+* Both tests pass as expected!
+
+### 🟥 assertTrue, assertFalse and assertNotNull
+
+* Here is a test which tests the `isGradeGreater`
+
+```java
+    @Test
+    @DisplayName("Is grades greater?")
+    void isGradeGreaterStudentGrades(){
+        assertTrue(studentGrades.isGradeGreater(999, 1));
+        //  Implementation:
+        //  if (gradeOne > gradeTwo) {
+        //      return true;
+        //  }
+        //      return false;
+    }
+```
+
+* Here is a test which asserts given object is not null:
+
+```java
 @Test
-@DisplayName("Add grade results for student grades not equal")
-void addGradeResultsForStudentGradesAssertNotEqual(){
-    assertNotEquals(100, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
-    // actual is 353.25
+@DisplayName("Check Null for student grades")
+void checkNullForGrades(){
+    assertNotNull(studentGrades.getMathGradeResults());
 }
 ```
 
+* The tests pass as expected
 
 ## 🟦 H2
 
