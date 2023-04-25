@@ -1519,6 +1519,126 @@ public class MvcTestingExampleApplication {
 }
 ```
 
+<br>
+<hr>
+
+## 🟦 4.3 Fixing the project
+
+### 🟥 Setting Up Test
+
+* I create a new copy of the 2.00-starter-project and place it [here](/Demos/demo-07-spring_boot_unit_testing/)
+
+* I add the `spring-boot-starter-test` dependency into the POM:
+
+```xml
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+	</dependencies>
+```
+
+* I create a new directory and package:
+
+![](2023-04-25-08-56-01.png)
+
+* I define an `ApplicationExampleTest` class:
+
+```java
+@SpringBootTest
+public class ApplicationExampleTest{
+    @Test
+    void basicTest(){}
+}
+```
+
+* I change the package of the test class to `com.luv2code.component` to match consistency of the main application's package. The test passes as expected
+
+* IF we had issues with the test class not being able to load the configuration, THEN we can use the `@SpringBootTest` annotation and explicitly specify the SpringBoot application class:
+
+```java
+@SpringBootTest(classes = MvcTestingExampleApplication.class)
+public class ApplicationExampleTest {
+    @Test
+    void basicTest(){}
+} 
+```
+
+
+### 🟥 Accessing Application Properties + Injecting Dependencies
+
+* We can access values from the `application.properties`  file using the `@Value` annotation.
+
+* E.g. suppose we have a property labeled info.app.name, we can set the value of a field and write a unit test to verify its value: 
+
+```java
+@SpringBootTest(classes = MvcTestingExampleApplication.class)
+public class ApplicationExampleTest {
+    
+    private static int count = 0;
+
+    @Value("${info.app.name}")
+    private String appInfo;
+
+    @Test
+    void checkAppInfo(){
+        assertEquals(appInfo, "My Super Cool Gradebook");
+    }
+}
+```
+
+* I update my test class so it has the properties and dependencies injected:
+
+```java
+@SpringBootTest(classes = MvcTestingExampleApplication.class)
+public class ApplicationExampleTest {
+    private static int count = 0;
+
+    @Value("${info.app.name}")
+    private String appInfo;
+
+    @Value("${info.app.description}")
+    private String appDescription;
+
+    @Value("${info.app.version}")
+    private String appVersion;
+
+    @Value("${info.school.name}")
+    private String schoolName;
+
+    @Autowired
+    CollegeStudent student;
+
+    @Autowired
+    StudentGrades studentGrades;
+
+    @Test
+    void checkAppInfo(){
+        assertEquals(appInfo, "My Super Cool Gradebook");
+    }
+}
+```
+
+* I create a `BeforeEach` method which initialises a Student object and increments the count:
+
+```java
+@BeforeEach
+void beforeEach(){
+    count = count++;
+    System.out.println("Testing: "+appInfo + " which is "+appDescription
+    + " Version: " + appVersion + "Executing Test method: "+ count);
+
+    student.setFirstname("Shiv");
+    student.setLastname("Kumar");
+    student.setEmailAddress("shiv.kumar@luv2code.com");
+    studentGrades.setMathGradeResults(Arrays.asList(100.0, 85.0, 76.50, 91.75));
+}
+```
 
 
 ## 🟦 H2
