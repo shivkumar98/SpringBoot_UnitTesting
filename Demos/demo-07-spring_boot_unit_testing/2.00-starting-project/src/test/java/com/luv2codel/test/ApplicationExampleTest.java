@@ -13,10 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = MvcTestingExampleApplication.class)
@@ -40,6 +44,9 @@ public class ApplicationExampleTest {
 
     @Autowired
     StudentGrades studentGrades;
+
+    @Autowired
+    ApplicationContext context;
 
     @BeforeEach
     void beforeEach(){
@@ -87,5 +94,37 @@ public class ApplicationExampleTest {
     @DisplayName("Check Null for student grades")
     void checkNullForGrades(){
         assertNotNull(studentGrades.getMathGradeResults());
+    }
+
+    @DisplayName("Create student without grade init")
+    @Test
+    void createStudentWithoutGradesInit(){
+        // autowired ApplicationContext into this class
+        CollegeStudent studentTwo = context.getBean(
+                "collegeStudent", CollegeStudent.class
+        );
+        studentTwo.setFirstname("Shiv");
+        studentTwo.setLastname("Kumar");
+        studentTwo.setEmailAddress("shiv.kumar@luv2code.com");
+        assertNull(studentGrades.checkNull(studentTwo.getStudentGrades())); // passes!
+    }
+
+    @DisplayName("Verify students are prototypes")
+    @Test
+    void verifyStudentArePrototypes(){
+        // CollegeStudent is not a service!
+        CollegeStudent studentTwo = context.getBean(
+                "collegeStudent", CollegeStudent.class
+        );
+        assertNotSame(student, studentTwo);
+    }
+
+    @DisplayName("Using assertAll")
+    @Test
+    void usingAssertAll(){
+        assertAll(
+            () -> assertEquals( true, true),
+            () -> assertEquals(false,false)
+        );
     }
 }

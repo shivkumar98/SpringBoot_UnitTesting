@@ -1685,14 +1685,60 @@ void beforeEach(){
 * Here is a test which asserts given object is not null:
 
 ```java
+    @Test
+    @DisplayName("Check Null for student grades")
+    void checkNullForGrades(){
+        assertNotNull(studentGrades.getMathGradeResults());
+    }
+```
+
+### 🟥 Prototype Beans
+
+* We can create prototype beans like in the following test:
+
+```java
+    @DisplayName("Create student without grade init")
+    @Test
+    void createStudentWithoutGradesInit(){
+        // autowired ApplicationContext into this class
+        CollegeStudent studentTwo = context.getBean(
+                "collegeStudent", CollegeStudent.class
+        );
+        studentTwo.setFirstname("Shiv");
+        studentTwo.setLastname("Kumar");
+        studentTwo.setEmailAddress("shiv.kumar@luv2code.com");
+        assertNull(studentGrades.checkNull(studentTwo.getStudentGrades())); // passes!
+    }
+```
+
+* We can verify the autowired `student` is not the same as the prototype through `assertNotSame`@:
+
+```java
+    @DisplayName("Verify students are prototypes")
+    @Test
+    void verifyStudentArePrototypes(){
+        // CollegeStudent is not a service!
+        CollegeStudent studentTwo = context.getBean(
+                "collegeStudent", CollegeStudent.class
+        );
+        assertNotSame(student, studentTwo);
+    }
+```
+
+* The `assertAll` let's us asserts that all assertions hold true, we use a lambda expression with with:
+
+```java
+@DisplayName("Using assertAll")
 @Test
-@DisplayName("Check Null for student grades")
-void checkNullForGrades(){
-    assertNotNull(studentGrades.getMathGradeResults());
+void usingAssertAll(){
+    assertAll(
+        () -> assertEquals( true, true),
+        () -> assertEquals(false,false)
+    );
 }
 ```
 
-* The tests pass as expected
+
 
 ## 🟦 H2
 
