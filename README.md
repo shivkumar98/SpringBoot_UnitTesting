@@ -1640,6 +1640,29 @@ void beforeEach(){
 }
 ```
 
+### 🟥 assertEquals and assertNotEquals
+
+* I add a new test for adding student grades:
+
+```java
+@Test
+@DisplayName("Add grade results for student grades")
+void addGradeResultsForStudentGrades(){
+    assertEquals(353.25, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
+}
+```
+
+* Here is an assertNotEqualsTest:
+
+```java
+@Test
+@DisplayName("Add grade results for student grades not equal")
+void addGradeResultsForStudentGradesAssertNotEqual(){
+    assertNotEquals(100, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
+    // actual is 353.25
+}
+```
+
 
 ## 🟦 H2
 

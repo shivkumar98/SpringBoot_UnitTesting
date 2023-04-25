@@ -7,6 +7,7 @@ import com.luv2code.component.MvcTestingExampleApplication;
 import com.luv2code.component.models.CollegeStudent;
 import com.luv2code.component.models.StudentGrades;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest(classes = MvcTestingExampleApplication.class)
 public class ApplicationExampleTest {
@@ -52,5 +54,19 @@ public class ApplicationExampleTest {
     @Test
     void checkAppInfo(){
         assertEquals(appInfo, "My Super Cool Gradebook");
+    }
+
+    @Test
+    @DisplayName("Add grade results for student grades")
+    void addGradeResultsForStudentGrades(){
+        assertEquals(353.25, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
+    }
+
+
+    @Test
+    @DisplayName("Add grade results for student grades not equal")
+    void addGradeResultsForStudentGradesAssertNotEqual(){
+        assertNotEquals(100, studentGrades.addGradeResultsForSingleClass(studentGrades.getMathGradeResults()));
+        // actual is 353.25
     }
 }
